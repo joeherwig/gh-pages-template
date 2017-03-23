@@ -1,0 +1,159 @@
+html
+  head
+    title gh-pages-template example
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel='stylesheet', href='css/style.css')
+    script.
+      NodeList.prototype.forEach = Array.prototype.forEach;
+
+      function setActivePage(pageID) {
+        let pages = document.querySelectorAll('.page[id]').forEach(function(page) {
+          document.getElementById(page.id).classList.remove("current");
+        })
+        document.getElementById(pageID).classList.add("current");
+
+        let navs = document.querySelectorAll('navigation item[id]').forEach(function(nav) {
+          document.getElementById(nav.id).classList.remove("current");
+        })
+        document.getElementById(pageID+'-nav').classList.add("current");
+        document.getElementById('navigation').classList.remove("open");
+      };
+
+      document.addEventListener('DOMContentLoaded', function() {
+        let listOfPages = '';
+        let allpages = document.querySelectorAll('.page[id]').forEach(function(page) {
+          let headlines = page.querySelectorAll('.page>.nav-label:first-child, .page:not(.nav-label)>h1:first-child, .page:not(.nav-label):not(h1)>h2:first-child, .page:not(.nav-label):not(h1):not(h2)>h3:first-child').forEach(function(pagetitle){
+            
+            let pullright = page.classList.contains('nav-pull-right');
+            if (pullright) {
+              listOfPages += "<item id='"+page.id+"-nav' onclick='setActivePage(\""+page.id+"\");' class='nav-pull-right'><span>"+pagetitle.innerText+"</span></item>";
+            } else {
+              listOfPages += "<item id='"+page.id+"-nav' onclick='setActivePage(\""+page.id+"\");'><span>"+pagetitle.innerText+"</span></item>";
+            };
+          })
+        })
+        document.getElementById('navigation').innerHTML = listOfPages
+        setActivePage(document.querySelector('.page[id]').id);
+      });
+
+  body
+    navigation#navigation
+    #collapse-bar(onclick='document.getElementById("navigation").classList.add("open");')
+      span gh-pages-template example
+      span.page-logo
+      .menu-icon
+        svg#svg4218(xmlns:dc='http://purl.org/dc/elements/1.1/', xmlns:cc='http://creativecommons.org/ns#', xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#', xmlns:svg='http://www.w3.org/2000/svg', xmlns='http://www.w3.org/2000/svg', xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd', xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape', width='30', height='30', viewbox='0 0 30 30', version='1.1', sodipodi:docname='burger-menu.svg')
+          defs#defs4220
+            metadata#metadata4223
+              rdf:rdf
+                cc:work(rdf:about='')
+                  dc:format image/svg+xml
+                  dc:type(rdf:resource='http://purl.org/dc/dcmitype/StillImage')
+                    dc:title
+          g#layer1(inkscape:label='Layer 1', inkscape:groupmode='layer')
+            g#g4798
+              g#g4793(transform='matrix(0.79994968,0,0,0.79994968,9.0492272,-11.717636)')
+                g#g4805(transform='translate(5.9608155e-8,-1.2500766)')
+                  rect#rect4766(ry='2.3430195', y='22.502588', x='-6.4974666', height='4.686039', width='27.872801', style='opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1')
+                  rect#rect4766-1(ry='2.3430195', y='32.306206', x='-6.4974666', height='4.686039', width='27.872801', style='opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1')
+                  rect#rect4766-3(ry='2.3430195', y='42.109818', x='-6.4974666', height='4.686039', width='27.872801', style='opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1')
+
+
+    .pages
+      
+      //  List here all pages you want to have in your responstive single-page-app
+      .page#introduction
+        .nav-label Introduction
+        h1 This gh-pages template
+        p was created to make it easier to publish Documentation for github repositories
+        h2 Advantages
+        p i wanted to have a fast solution without the need of taking care about 
+        ul
+          li responsiveness,
+          li adding a menu
+          li keeping a small footprint and fast loading time
+          li getting it without any dependancies and libraries
+          li installing any additional tools like jekyll etc.
+
+        p And i wanted to be able to edit the pages quite fast.
+
+      .page#HowTo
+        h1 How-To
+        ol
+          li Add a gh-pages branch for your repo
+          li switch to the gh-pages branch in your repo
+          li Get the gh-pages-template repo from github.com 
+            a(href="https://github.com/joeherwig/gh-pages-template" target="github") https://github.com/joeherwig/gh-pages-template 
+            | or 
+            a(href="https://github.com/joeherwig/gh-pages-template/archive/master.zip") download as zip
+          li put the content of the 'src' directory from inside the downloaded zip to your empty gh-pages branch
+          li edit the index and style files.
+
+        h2 easy edit
+        p i love pug - the successor of jade - for editing html etc. The same applies to jade which has a couple of advantages compared to pure css.
+        p due to that i'm running a save-on-build process within my editor which enables me to write my code in pure pug/jade and sass and on save my editor saves the file also as html / css. That#s the reason, why you'll find additionaly to the html and css-files also the jade and sass-version. - It's even easier to edit.
+        p of course i could list you all the html-code (containing hundreds of brackets, closing-tags etc.) but for a better readability i just show you the structures as simple 
+          a(href="http://learnjade.com/" target="pug") pug
+          |  -examples.
+        h2 Let's go!
+        p If you open the index.jade you can directly start keying-in your content, after the 
+        pre
+          code.
+            .pages
+        | element.
+        p so if you write for instance:
+        pre
+          code.
+            .pages
+              .page#chapter1
+                .nav-label Introduction
+                h1 This gh-pages template
+                p was created to make it easier to publish Documentation for github repositories
+                h2 Advantages
+                p i wanted to have a fast solution without the need of taking care about 
+                ul
+                  li responsiveness,
+                  li adding a menu
+                  li keeping a small footprint and fast loading time
+                  li getting it without any dependancies and libraries
+                  li installing any additional tools like jekyll etc.
+
+        p And i wanted to be able to edit the pages quite fast.
+        p you'll get one single 
+        ul 
+          li page with the content of this Introduction 
+          li an automatically generated nav-item with the text "Introduction"
+
+        h3 right menu item
+        p if you want to pull a menu-item to the right, just add the class '
+          b nav-pull-right
+          | ' to the page
+        pre
+          code.             
+              .page#contact.nav-pull-right
+        
+        h3 even faster                
+        p If there's no need to add nav-labels which differ from your headings, why shoud you add them?
+        p Just try leaving away the .nav-label container:
+        p eg.:
+        pre
+          code.
+            .page#myID
+              h1 @github
+        p will add a navigation item to your page which has "@github" as label.
+        p If you don't define the nav-label explicityl the page will try to fetch the first heading (up to &lt;h3&gt;)
+        pre
+          code.
+            .page>.nav-label:first-child,
+            .page:not(.nav-label)>h1:first-child,
+            .page:not(.nav-label):not(h1)>h2:first-child,
+            .page:not(.nav-label):not(h1):not(h2)>h3:first-child
+       .page#Style
+        h1 Design
+        p The design of this repo will probably not fit exactly to your needs, but i
+          a(href="https://github.com/joeherwig" target="github") @ github page .
+
+       .page#getInTouch.nav-pull-right
+        h1 @github
+        p If you have recommendations, remarks, hints or want to tell me anything else, you can get in touch with me 
+          a(href="https://github.com/joeherwig" target="github") @ github page .
