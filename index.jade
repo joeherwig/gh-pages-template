@@ -65,7 +65,7 @@ html
       .page#introduction
         .nav-label Introduction
         h1 This gh-pages template
-        p was created to make it easier to publish Documentation for github repositories
+        p was created to make it easier to publish documentation for github repositories.
         h2 Advantages
         p i wanted to have a fast solution without the need of taking care about 
         ul
@@ -118,12 +118,10 @@ html
                   li getting it without any dependancies and libraries
                   li installing any additional tools like jekyll etc.
 
-        p And i wanted to be able to edit the pages quite fast.
         p you'll get one single 
         ul 
           li page with the content of this Introduction 
           li an automatically generated nav-item with the text "Introduction"
-
         h3 right menu item
         p if you want to pull a menu-item to the right, just add the class '
           b nav-pull-right
@@ -132,7 +130,7 @@ html
           code.
               .page#contact.nav-pull-right
         
-        h3 even faster                
+        h3 Go even faster                !
         p If there's no need to add nav-labels which differ from your headings, why shoud you add them?
         p Just try leaving away the .nav-label container:
         p eg.:
@@ -150,10 +148,15 @@ html
             .page:not(.nav-label):not(h1):not(h2)>h3:first-child
        .page#Style
         h1 Design
-        p The design of this repo will probably not fit exactly to your needs, but i
-          a(href="https://github.com/joeherwig" target="github") @ github page .
+        p The design of this repo will probably not fit exactly to your needs, but it should be easy to edit it using the style.sass / style.css-file within the 
+          code /css/
+          | folder. Bring it to you own style. :-)
+        p If you want to replace the icon, just change the 
+          code /images/Logo.svg
+          | to your needs.
 
        .page#getInTouch.nav-pull-right
         h1 @github
-        p If you have recommendations, remarks, hints or want to tell me anything else, you can get in touch with me 
-          a(href="https://github.com/joeherwig/gh-pages-template/issues" target="github") @ github page .
+        p If you have recommendations, remarks, hints or want to tell me anything else, you can get in touch with me @ 
+          a(href="https://github.com/joeherwig/gh-pages-template/issues" target="github") the github-issues
+          |  page.
