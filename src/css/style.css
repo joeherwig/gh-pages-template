@@ -1,0 +1,178 @@
+navigation {
+  background: #ffe7d7;
+  border-bottom: 1px solid #dedede;
+  box-shadow: 0 0 10px #000;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  left: 0px;
+  margin: 0px;
+  padding: 1rem 2rem 0.5rem 2rem;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  transition: all 0.5s linear;
+  z-index: 100; }
+  navigation item {
+    background: #ffcaa6;
+    border-radius: 0.5rem;
+    display: block;
+    flex: 1 0 auto;
+    margin: 5px 5px 0px 5px;
+    max-width: 150px;
+    padding: 0.5rem;
+    text-align: center;
+    transform: skewX(-45deg); }
+    navigation item:hover, navigation item:active, navigation item .current:hover {
+      background: #d87e42; }
+    navigation item:nth-child(0) {
+      padding-left: 100px; }
+    navigation item.current {
+      background: #703b00;
+      color: #FFF;
+      font-weight: bold; }
+    navigation item span {
+      display: block;
+      transform: skewX(45deg); }
+  navigation .nav-pull-right {
+    margin-left: auto; }
+
+#collapse-bar {
+  box-shadow: 0px 0px 10px #eeeeee;
+  display: block;
+  height: 0px;
+  width: 100%; }
+
+li {
+  line-height: 1.5rem; }
+
+blockquote {
+  font-style: italic; }
+
+pre {
+  overflow: auto; }
+
+code {
+  background: #eeeeee;
+  display: block;
+  font-family: "Monospace";
+  padding: 10px; }
+
+body:after {
+  background: url(http://lorempixel.com/1920/1080/nature/);
+  bottom: 0;
+  content: "";
+  left: 0;
+  opacity: 0.1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1; }
+
+.page {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 0px 25px #888888;
+  display: none;
+  left: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 6rem;
+  max-width: 1000px;
+  padding: 20px;
+  position: relative;
+  right: auto; }
+  .page .nav-label {
+    display: none; }
+  .page * {
+    max-width: 100%; }
+
+.current {
+  display: block; }
+
+a[href$=".pdf"]:after {
+  content: "";
+  display: inline-block;
+  height: 100px;
+  width: 100px; }
+
+@media screen and (min-width: 1001px) {
+  .page-logo {
+    content: url(../images/Logo.svg);
+    height: 80px;
+    left: 10;
+    margin-top: -90px !important;
+    position: fixed !important;
+    z-index: 200; }
+
+  navigation item:nth-child(1) {
+    margin-left: 100px; }
+
+  #collapse-bar span:not(.page-logo), #collapse-bar .menu-icon {
+    display: none; } }
+@media screen and (max-width: 1000px) {
+  navigation {
+    box-shadow: 0px 0px 10px #000;
+    display: flex;
+    flex-flow: column wrap;
+    transform: translate(-1100px, 0px); }
+    navigation * {
+      transition: all 0.25s ease; }
+    navigation item {
+      background: none;
+      border-bottom: 1px solid skyblue;
+      border-radius: 0px;
+      border: none;
+      display: block;
+      flex: 1;
+      height: 1.5rem;
+      margin-bottom: 0.25rem;
+      margin: auto;
+      max-width: 100%;
+      padding: 0.5rem;
+      position: relative;
+      text-align: center;
+      transform: skewX(-45deg);
+      transform: translate(-1010, 0px);
+      width: 90%; }
+      navigation item:hover, navigation item:focus, navigation item:active {
+        border-radius: 0.5rem; }
+      navigation item:nth-child(0) {
+        padding-left: 0px; }
+      navigation item.current {
+        border-radius: 0.5rem; }
+      navigation item span {
+        display: block;
+        transform: skewX(45deg); }
+
+  navigation.open {
+    transform: translate(0px, 0px); }
+
+  #collapse-bar {
+    align-items: center;
+    background: #ffe7d7;
+    border-radius: 0px;
+    box-shadow: 0px 0px 10px #000;
+    display: flex;
+    height: 30px;
+    justify-content: space-between;
+    left: 0px;
+    padding: 10px 20px 10px 20px;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    width: auto;
+    z-index: 50; }
+    #collapse-bar * {
+      flex: 1; }
+    #collapse-bar .menu-icon {
+      text-align: right; }
+
+  .page {
+    margin-top: 3rem; } }
+.page-logo {
+  content: url(../images/Logo.svg);
+  height: 70px;
+  margin-top: 40px;
+  position: relative; }
+
+/*# sourceMappingURL=style.css.map */

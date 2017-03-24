@@ -1,0 +1,69 @@
+html
+  head
+    title my repo-docs
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    link(rel='stylesheet', href='css/style.css')
+    script.
+      NodeList.prototype.forEach = Array.prototype.forEach;
+
+      function setActivePage(pageID) {
+        let pages = document.querySelectorAll('.page[id]').forEach(function(page) {
+          document.getElementById(page.id).classList.remove("current");
+        })
+        document.getElementById(pageID).classList.add("current");
+
+        let navs = document.querySelectorAll('navigation item[id]').forEach(function(nav) {
+          document.getElementById(nav.id).classList.remove("current");
+        })
+        document.getElementById(pageID+'-nav').classList.add("current");
+        document.getElementById('navigation').classList.remove("open");
+      };
+
+      document.addEventListener('DOMContentLoaded', function() {
+        let listOfPages = '';
+        let allpages = document.querySelectorAll('.page[id]').forEach(function(page) {
+          let headlines = page.querySelectorAll('.page>.nav-label:first-child, .page:not(.nav-label)>h1:first-child, .page:not(.nav-label):not(h1)>h2:first-child, .page:not(.nav-label):not(h1):not(h2)>h3:first-child').forEach(function(pagetitle){
+            
+            let pullright = page.classList.contains('nav-pull-right');
+            if (pullright) {
+              listOfPages += "<item id='"+page.id+"-nav' onclick='setActivePage(\""+page.id+"\");' class='nav-pull-right'><span>"+pagetitle.innerText+"</span></item>";
+            } else {
+              listOfPages += "<item id='"+page.id+"-nav' onclick='setActivePage(\""+page.id+"\");'><span>"+pagetitle.innerText+"</span></item>";
+            };
+          })
+        })
+        document.getElementById('navigation').innerHTML = listOfPages
+        setActivePage(document.querySelector('.page[id]').id);
+      });
+  body
+    navigation#navigation
+    #collapse-bar(onclick='document.getElementById("navigation").classList.add("open");')
+      span gh-pages-template example
+      span.page-logo
+      .menu-icon
+        svg#svg4218(xmlns:dc='http://purl.org/dc/elements/1.1/', xmlns:cc='http://creativecommons.org/ns#', xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#', xmlns:svg='http://www.w3.org/2000/svg', xmlns='http://www.w3.org/2000/svg', xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd', xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape', width='30', height='30', viewbox='0 0 30 30', version='1.1', sodipodi:docname='burger-menu.svg')
+          defs#defs4220
+            metadata#metadata4223
+              rdf:rdf
+                cc:work(rdf:about='')
+                  dc:format image/svg+xml
+                  dc:type(rdf:resource='http://purl.org/dc/dcmitype/StillImage')
+                    dc:title
+          g#layer1(inkscape:label='Layer 1', inkscape:groupmode='layer')
+            g#g4798
+              g#g4793(transform='matrix(0.79994968,0,0,0.79994968,9.0492272,-11.717636)')
+                g#g4805(transform='translate(5.9608155e-8,-1.2500766)')
+                  rect#rect4766(ry='2.3430195', y='22.502588', x='-6.4974666', height='4.686039', width='27.872801', style='opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1')
+                  rect#rect4766-1(ry='2.3430195', y='32.306206', x='-6.4974666', height='4.686039', width='27.872801', style='opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1')
+                  rect#rect4766-3(ry='2.3430195', y='42.109818', x='-6.4974666', height='4.686039', width='27.872801', style='opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1')
+    .pages
+      .page#introduction
+        .nav-label Introduction
+        h1 Just a template page
+        p for your easy start on writing your repos presentation page.
+
+     .page#getInTouch.nav-pull-right
+        h1 me@github
+        p you could use this block for placing your contact information or point to your repo 
+          a(href="https://github.com/" target="github") @github
+          |  .
