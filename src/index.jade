@@ -3,37 +3,59 @@ html
     title my repo-docs
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel='stylesheet', href='css/style.css')
+    script(src="https://hammerjs.github.io/dist/hammer.js")
     script.
       NodeList.prototype.forEach = Array.prototype.forEach;
+      let activePage = 0;
 
       function setActivePage(pageID) {
+        activePage = pageID;
         let pages = document.querySelectorAll('.page[id]').forEach(function(page) {
           document.getElementById(page.id).classList.remove("current");
         })
-        document.getElementById(pageID).classList.add("current");
+        document.getElementById('page-'+pageID).classList.add("current");
 
         let navs = document.querySelectorAll('navigation item[id]').forEach(function(nav) {
           document.getElementById(nav.id).classList.remove("current");
         })
-        document.getElementById(pageID+'-nav').classList.add("current");
+        document.getElementById('page-'+pageID+'-nav').classList.add("current");
         document.getElementById('navigation').classList.remove("open");
       };
 
       document.addEventListener('DOMContentLoaded', function() {
         let listOfPages = '';
-        let allpages = document.querySelectorAll('.page[id]').forEach(function(page) {
+        let allpages = document.querySelectorAll('.page').forEach(function(page, i) {
+        page.setAttribute('id', 'page-'+i);
           let headlines = page.querySelectorAll('.page>.nav-label:first-child, .page:not(.nav-label)>h1:first-child, .page:not(.nav-label):not(h1)>h2:first-child, .page:not(.nav-label):not(h1):not(h2)>h3:first-child').forEach(function(pagetitle){
-            
             let pullright = page.classList.contains('nav-pull-right');
             if (pullright) {
-              listOfPages += "<item id='"+page.id+"-nav' onclick='setActivePage(\""+page.id+"\");' class='nav-pull-right'><span>"+pagetitle.innerText+"</span></item>";
+              listOfPages += "<item id='page-"+i+"-nav' onclick='setActivePage("+i+");' class='nav-pull-right'><span>"+pagetitle.innerText+"</span></item>";
             } else {
-              listOfPages += "<item id='"+page.id+"-nav' onclick='setActivePage(\""+page.id+"\");'><span>"+pagetitle.innerText+"</span></item>";
+              listOfPages += "<item id='page-"+i+"-nav' onclick='setActivePage("+i+");'><span>"+pagetitle.innerText+"</span></item>";
             };
           })
+
         })
         document.getElementById('navigation').innerHTML = listOfPages
-        setActivePage(document.querySelector('.page[id]').id);
+        setActivePage(0);
+
+        let pages = document.querySelector('body');
+        let mc = new Hammer(pages);
+        let lastpage = document.querySelectorAll('.page[id]').length;
+        mc.on("swipeleft swiperight tap press", function(ev) {
+            switch (ev.type) {
+              case "swipeleft":
+                if (activePage < lastpage-1) {
+                  setActivePage(activePage+1);
+                }
+                break;
+              case "swiperight": 
+                if (activePage > 0) {
+                  setActivePage(activePage-1);
+                }
+                break;
+            }
+        });
       });
   body
     navigation#navigation
@@ -57,12 +79,19 @@ html
                   rect#rect4766-1(ry='2.3430195', y='32.306206', x='-6.4974666', height='4.686039', width='27.872801', style='opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1')
                   rect#rect4766-3(ry='2.3430195', y='42.109818', x='-6.4974666', height='4.686039', width='27.872801', style='opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1')
     .pages
-      .page#introduction
+      .page
         .nav-label Introduction
         h1 Just a template page
         p for your easy start on writing your repos presentation page.
 
-     .page#getInTouch.nav-pull-right
+      .page
+        h1 touch navigation
+        h2 Added touch navigation to the template.
+        p now this gh-pages template became a touch navigation addition for easier navigation on mobile devices.
+        p A simple swipe-left jumps to the previous and a swipe-right opens the next page.
+        p on writing your documentation you don't need to care about it at all.
+
+     .page.nav-pull-right
         h1 me@github
         p you could use this block for placing your contact information or point to your repo 
           a(href="https://github.com/" target="github") @github
