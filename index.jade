@@ -3,39 +3,60 @@ html
     title gh-pages-template example
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(rel='stylesheet', href='css/style.css')
+    script(src="https://hammerjs.github.io/dist/hammer.js")
     script.
       NodeList.prototype.forEach = Array.prototype.forEach;
+      let activePage = 0;
 
       function setActivePage(pageID) {
+        activePage = pageID;
         let pages = document.querySelectorAll('.page[id]').forEach(function(page) {
           document.getElementById(page.id).classList.remove("current");
         })
-        document.getElementById(pageID).classList.add("current");
+        document.getElementById('page-'+pageID).classList.add("current");
 
         let navs = document.querySelectorAll('navigation item[id]').forEach(function(nav) {
           document.getElementById(nav.id).classList.remove("current");
         })
-        document.getElementById(pageID+'-nav').classList.add("current");
+        document.getElementById('page-'+pageID+'-nav').classList.add("current");
         document.getElementById('navigation').classList.remove("open");
       };
 
       document.addEventListener('DOMContentLoaded', function() {
         let listOfPages = '';
-        let allpages = document.querySelectorAll('.page[id]').forEach(function(page) {
+        let allpages = document.querySelectorAll('.page').forEach(function(page, i) {
+        page.setAttribute('id', 'page-'+i);
           let headlines = page.querySelectorAll('.page>.nav-label:first-child, .page:not(.nav-label)>h1:first-child, .page:not(.nav-label):not(h1)>h2:first-child, .page:not(.nav-label):not(h1):not(h2)>h3:first-child').forEach(function(pagetitle){
-            
             let pullright = page.classList.contains('nav-pull-right');
             if (pullright) {
-              listOfPages += "<item id='"+page.id+"-nav' onclick='setActivePage(\""+page.id+"\");' class='nav-pull-right'><span>"+pagetitle.innerText+"</span></item>";
+              listOfPages += "<item id='page-"+i+"-nav' onclick='setActivePage("+i+");' class='nav-pull-right'><span>"+pagetitle.innerText+"</span></item>";
             } else {
-              listOfPages += "<item id='"+page.id+"-nav' onclick='setActivePage(\""+page.id+"\");'><span>"+pagetitle.innerText+"</span></item>";
+              listOfPages += "<item id='page-"+i+"-nav' onclick='setActivePage("+i+");'><span>"+pagetitle.innerText+"</span></item>";
             };
           })
+
         })
         document.getElementById('navigation').innerHTML = listOfPages
-        setActivePage(document.querySelector('.page[id]').id);
-      });
+        setActivePage(0);
 
+        let pages = document.querySelector('body');
+        let mc = new Hammer(pages);
+        let lastpage = document.querySelectorAll('.page[id]').length;
+        mc.on("swipeleft swiperight tap press", function(ev) {
+            switch (ev.type) {
+              case "swipeleft":
+                if (activePage < lastpage-1) {
+                  setActivePage(activePage+1);
+                }
+                break;
+              case "swiperight": 
+                if (activePage > 0) {
+                  setActivePage(activePage-1);
+                }
+                break;
+            }
+        });
+      });
   body
     navigation#navigation
     #collapse-bar(onclick='document.getElementById("navigation").classList.add("open");')
@@ -62,7 +83,7 @@ html
     .pages
       
       //  List here all pages you want to have in your responstive single-page-app
-      .page#introduction
+      .page
         .nav-label Introduction
         h1 This gh-pages template
         p was created to make it easier to publish documentation for github repositories.
@@ -77,7 +98,7 @@ html
 
         p And i wanted to be able to edit the pages quite fast.
 
-      .page#HowTo
+      .page
         h1 How-To
         ol
           li Add a gh-pages branch for your repo
@@ -105,7 +126,7 @@ html
         pre
           code.
             .pages
-              .page#chapter1
+              .page
                 .nav-label Introduction
                 h1 This gh-pages template
                 p was created to make it easier to publish Documentation for github repositories
@@ -128,7 +149,7 @@ html
           | ' to the page
         pre
           code.
-              .page#contact.nav-pull-right
+              .page.nav-pull-right
         
         h3 Go even faster                !
         p If there's no need to add nav-labels which differ from your headings, why shoud you add them?
@@ -136,7 +157,7 @@ html
         p eg.:
         pre
           code.
-            .page#myID
+            .page
               h1 @github
         p will add a navigation item to your page which has "@github" as label.
         p If you don't define the nav-label explicityl the page will try to fetch the first heading (up to &lt;h3&gt;)
@@ -146,7 +167,7 @@ html
             .page:not(.nav-label)>h1:first-child,
             .page:not(.nav-label):not(h1)>h2:first-child,
             .page:not(.nav-label):not(h1):not(h2)>h3:first-child
-       .page#Style
+       .page
         h1 Design
         p The design of this repo will probably not fit exactly to your needs, but it should be easy to edit it using the style.sass / style.css-file within the 
           code /css/
@@ -154,6 +175,9 @@ html
         p If you want to replace the icon, just change the 
           code /images/Logo.svg
           | to your needs.
+        h2 Navigation
+        p For an easy navigation the navigation is kept responsive and always on top of the page.
+        p Additionaly switching between the pages is now available via simple swipe guesture. A swipe from right to left = next page and a swipe from left to right jumps to the previous page within the menu.
 
        .page#getInTouch.nav-pull-right
         h1 @github
